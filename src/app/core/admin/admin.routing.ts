@@ -3,6 +3,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpdeskComponent } from './helpdesk/helpdesk.component';
 import { AssetManagementComponent } from './asset-management/asset-management.component';
 import { AcceptanceApprovalManagementComponent } from './acceptance-approval-management/acceptance-approval-management.component';
+import { ReportsComponent } from './reports/reports.component';
 
 export const AdminRoutes: Routes = [
     {
@@ -31,6 +32,10 @@ export const AdminRoutes: Routes = [
             {
                 path: 'asset-management',
                 component: AssetManagementComponent
+            },
+            {
+                path: 'reports',
+                component: ReportsComponent
             },
             {
                 path: 'administration',

@@ -15,9 +15,12 @@ import { RouterModule } from '@angular/router';
 
 import { DeliveryRolloutManagementRoutes } from './delivery-rollout-management.routing';
 import { ProjectManagementComponent } from './project-management/project-management.component';
+import { PunchlistManagementComponent } from './punchlist-management/punchlist-management.component';
+import { BlockingIssuesComponent } from './blocking-issues/blocking-issues.component';
+import { TroubleTicketManagementComponent } from './trouble-ticket-management/trouble-ticket-management.component';
 
 @NgModule({
-  declarations: [ProjectManagementComponent],
+  declarations: [ProjectManagementComponent, PunchlistManagementComponent, BlockingIssuesComponent, TroubleTicketManagementComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,

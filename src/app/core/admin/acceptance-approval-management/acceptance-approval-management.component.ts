@@ -1,7 +1,8 @@
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, ViewChild } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import * as AcceptanceApprovalManagements from "src/app/variables/acceptance-approval-management";
 import swal from "sweetalert2";
+import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -22,6 +23,15 @@ export enum SelectionType {
   styleUrls: ["./acceptance-approval-management.component.scss"]
 })
 export class AcceptanceApprovalManagementComponent implements OnInit {
+
+  @ViewChild(SignaturePad, {static: false}) signaturePad: SignaturePad;
+  private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+    'minWidth': 5,
+    'canvasWidth': 400,
+    'canvasHeight': 300,
+    'backgroundColor': 'rgba(255,255,255,255)'
+  };
+
   entries: number = 5;
   selected: any[] = [];
   temp = [];
@@ -30,22 +40,22 @@ export class AcceptanceApprovalManagementComponent implements OnInit {
   SelectionType = SelectionType;
 
   // dropdowns
-  categorys = ["electronic", "network", "wiring", "cable", "server"];
+  statuss = ["approved", "rejected", "pending"];
 
   // searchInput
   searchInput = {
-    documentname: "",
-    documentdescription: "",
-    approvalby: "",
+    workorderid: "",
+    workorderdescription: "",
+    approvalby: ""
   };
 
   // formInput
   formInput = {
-    documentname: "",
-    documentdescription: "",
-    uploaddate: "",
+    workorderid: "",
+    workorderdescription: "",
     approvalby: "",
-    approvaldate: ""
+    date: "",
+    status: ""
   };
 
   // Modal
@@ -116,8 +126,8 @@ export class AcceptanceApprovalManagementComponent implements OnInit {
   resetTable() {
     this.temp = this.rows;
 
-    this.searchInput.documentname = "";
-    this.searchInput.documentdescription = "";
+    this.searchInput.workorderid = "";
+    this.searchInput.workorderdescription = "";
     this.searchInput.approvalby = "";
   }
 
@@ -183,6 +193,58 @@ export class AcceptanceApprovalManagementComponent implements OnInit {
           swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
+            type: "success",
+            buttonsStyling: false,
+            confirmButtonClass: "btn btn-primary"
+          });
+        }
+      });
+  }
+
+  approve() {
+    swal
+      .fire({
+        title: "Are you sure?",
+        // text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-success",
+        confirmButtonText: "Yes, approve it!",
+        cancelButtonClass: "btn btn-secondary"
+      })
+      .then(result => {
+        if (result.value) {
+          // Show confirmation
+          swal.fire({
+            title: "Approved!",
+            // text: "Your file has been deleted.",
+            type: "success",
+            buttonsStyling: false,
+            confirmButtonClass: "btn btn-primary"
+          });
+        }
+      });
+  }
+
+  reject() {
+    swal
+      .fire({
+        title: "Are you sure?",
+        // text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-danger",
+        confirmButtonText: "Yes, reject it!",
+        cancelButtonClass: "btn btn-secondary"
+      })
+      .then(result => {
+        if (result.value) {
+          // Show confirmation
+          swal.fire({
+            title: "Rejected!",
+            // text: "Your file has been deleted.",
             type: "success",
             buttonsStyling: false,
             confirmButtonClass: "btn btn-primary"
@@ -301,5 +363,9 @@ export class AcceptanceApprovalManagementComponent implements OnInit {
     this.zone.runOutsideAngular(() => {
       // this.initChart();
     });
+
+    // this.signaturePad is now available
+    // this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    // this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
   }
 }

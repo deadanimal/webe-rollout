@@ -1,8 +1,12 @@
 import { Component, OnInit, NgZone } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import * as MatchingTowerProviders from "src/app/variables/matching-tower-providers";
+import * as Tickets from "src/app/variables/tickets";
 import swal from "sweetalert2";
-import * as L from "leaflet";
+
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+am4core.useTheme(am4themes_animated);
 
 export enum SelectionType {
   single = "single",
@@ -13,46 +17,37 @@ export enum SelectionType {
 }
 
 @Component({
-  selector: "app-matching-tower-provider",
-  templateUrl: "./matching-tower-provider.component.html",
-  styleUrls: ["./matching-tower-provider.component.scss"]
+  selector: "app-trouble-ticket-management",
+  templateUrl: "./trouble-ticket-management.component.html",
+  styleUrls: ["./trouble-ticket-management.component.scss"]
 })
-export class MatchingTowerProviderComponent implements OnInit {
+export class TroubleTicketManagementComponent implements OnInit {
   entries: number = 5;
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows = MatchingTowerProviders.MatchingTowerProviders;
+  rows = Tickets.Tickets;
   SelectionType = SelectionType;
 
-  // leaflet
-  leafletOptions = {
-    layers: [
-      L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
-        maxZoom: 20,
-        subdomains: ["mt0", "mt1", "mt2", "mt3"]
-      })
-    ],
-    zoom: 9,
-    center: L.latLng(3.0738, 101.5183)
-  };
-  public markers = [];
+  // dropdowns
+  troubleticketcategorys = ["urgent", "crucial", "major", "minor"];
+  statuss = ["not started", "pending", "complete"];
 
   // searchInput
   searchInput = {
-    siteid: "",
-    antenna: "",
-    txrequirement: ""
+    troubleticketid: "",
+    troubleticketcategory: "",
+    workorderid: "",
+    status: ""
   };
 
   // formInput
   formInput = {
-    siteid: "",
-    latitude: 0,
-    longitude: 0,
-    antenna: "",
-    rrusarheight: 0,
-    txrequirement: ""
+    troubleticketid: "",
+    troubleticketcategory: "",
+    workorderid: "",
+    enddate: "",
+    status: ""
   };
 
   // Modal
@@ -123,9 +118,10 @@ export class MatchingTowerProviderComponent implements OnInit {
   resetTable() {
     this.temp = this.rows;
 
-    this.searchInput.siteid = "";
-    this.searchInput.antenna = "";
-    this.searchInput.txrequirement = "";
+    this.searchInput.troubleticketid = "";
+    this.searchInput.troubleticketcategory = "";
+    this.searchInput.workorderid = "";
+    this.searchInput.status = "";
   }
 
   onSelect({ selected }) {
@@ -143,8 +139,8 @@ export class MatchingTowerProviderComponent implements OnInit {
     // if (modalDimension === "sm" && type === "modal_mini") {
     this.modalService
       .open(content, {
-        windowClass: "modal-mini",
-        centered: true
+        centered: true,
+        size: "lg"
       })
       .result.then(
         result => {
@@ -198,34 +194,92 @@ export class MatchingTowerProviderComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.addMarker();
+  initChart() {
+    let chart = am4core.create("chartdiv", am4charts.PieChart);
+
+    // Add and configure Series
+    let pieSeries = chart.series.push(new am4charts.PieSeries());
+    pieSeries.dataFields.value = "total";
+    pieSeries.dataFields.category = "status";
+
+    // Let's cut a hole in our Pie chart the size of 30% the radius
+    chart.innerRadius = am4core.percent(30);
+
+    // Put a thick white border around each Slice
+    pieSeries.slices.template.stroke = am4core.color("#fff");
+    pieSeries.slices.template.strokeWidth = 2;
+    pieSeries.slices.template.strokeOpacity = 1;
+    // change the cursor on hover to make it apparent the object can be interacted with
+    pieSeries.slices.template.cursorOverStyle = [
+      {
+        property: "cursor",
+        value: "pointer"
+      }
+    ];
+
+    pieSeries.alignLabels = false;
+    pieSeries.labels.template.bent = true;
+    pieSeries.labels.template.radius = 3;
+    pieSeries.labels.template.padding(0, 0, 0, 0);
+
+    pieSeries.ticks.template.disabled = true;
+
+    // Create a base filter effect (as if it's not there) for the hover to return to
+    let shadow = pieSeries.slices.template.filters.push(
+      new am4core.DropShadowFilter()
+    );
+    shadow.opacity = 0;
+
+    // Create hover state
+    let hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+
+    // Slightly shift the shadow and make it more prominent on hover
+    let hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter());
+    hoverShadow.opacity = 0.7;
+    hoverShadow.blur = 5;
+
+    // Add a legend
+    chart.legend = new am4charts.Legend();
+
+    chart.data = [
+      {
+        status: "Complete",
+        total: 8
+      },
+      {
+        status: "Not Started",
+        total: 7
+      },
+      {
+        status: "Pending",
+        total: 5
+      }
+    ];
   }
 
-  addMarker() {
-    let marker1 = L.marker([2.940298, 101.47522], {
-      icon: L.icon({
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        iconUrl: "assets/img/marker/marker-green.svg"
-      })
+  ngOnInit() {}
+
+  ngAfterViewInit(): void {
+    this.zone.runOutsideAngular(() => {
+      this.initChart();
     });
-    this.markers.push(marker1);
-    let marker2 = L.marker([3.196735, 101.431274], {
-      icon: L.icon({
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        iconUrl: "assets/img/marker/marker-red.svg"
+  }
+
+  view(type) {
+    // this.processTitle = type;
+    // if (modalDimension === "sm" && type === "modal_mini") {
+    this.modalService
+      .open(type, {
+        centered: true,
+        size: "lg"
       })
-    });
-    this.markers.push(marker2);
-    let marker3 = L.marker([3.126804, 101.862488], {
-      icon: L.icon({
-        iconSize: [25, 41],
-        iconAnchor: [13, 41],
-        iconUrl: "assets/img/marker/marker-yellow.svg"
-      })
-    });
-    this.markers.push(marker3);
+      .result.then(
+        result => {
+          this.closeResult = "Closed with: $result";
+        },
+        reason => {
+          this.closeResult = "Dismissed $this.getDismissReason(reason)";
+        }
+      );
   }
 }

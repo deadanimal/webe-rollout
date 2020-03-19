@@ -78,7 +78,10 @@ export const ROUTES: RouteInfo[] = [
     collapse: "rollout",
     isCollapsed: true,
     children: [
-      { path: "project-management", title: "Project Management", type: "link" }
+      { path: "project-management", title: "Project Management", type: "link" },
+      { path: "punchlist-management", title: "Punchlist Management", type: "link" },
+      { path: "blocking-issues", title: "Blocking Issues", type: "link" },
+      { path: "trouble-ticket-management", title: "Trouble Ticket Management", type: "link" }
     ]
   },
   {
@@ -86,6 +89,12 @@ export const ROUTES: RouteInfo[] = [
     title: "Asset Management",
     type: "link",
     icontype: "fas fa-toolbox text-info"
+  },
+  {
+    path: "/admin/reports",
+    title: "Reports",
+    type: "link",
+    icontype: "fas fa-clipboard text-primary"
   },
   {
     path: "/admin/administration",

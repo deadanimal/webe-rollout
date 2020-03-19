@@ -10,6 +10,7 @@ import { NgxPrintModule } from "ngx-print";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from "ngx-bootstrap/modal";
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 import { RouterModule } from '@angular/router';
 
@@ -18,13 +19,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpdeskComponent } from './helpdesk/helpdesk.component';
 import { AssetManagementComponent } from './asset-management/asset-management.component';
 import { AcceptanceApprovalManagementComponent } from './acceptance-approval-management/acceptance-approval-management.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     HelpdeskComponent,
     AssetManagementComponent,
-    AcceptanceApprovalManagementComponent
+    AcceptanceApprovalManagementComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +40,7 @@ import { AcceptanceApprovalManagementComponent } from './acceptance-approval-man
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     FormsModule,
+    SignaturePadModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forChild(AdminRoutes)
   ]
