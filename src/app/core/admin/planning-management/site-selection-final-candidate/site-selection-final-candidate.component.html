@@ -39,6 +39,7 @@
                   <div class="card-body px-lg-5 py-lg-5">
                     <form>
                       <div class="form-group">
+                        <label>Site ID</label>
                         <input
                           type="text"
                           class="form-control"
@@ -48,6 +49,7 @@
                         />
                       </div>
                       <div class="form-group">
+                        <label>Username</label>
                         <input
                           type="text"
                           class="form-control"
@@ -57,6 +59,7 @@
                         />
                       </div>
                       <div class="form-group">
+                        <label>Date</label>
                         <input
                           class="form-control"
                           type="date"
@@ -65,12 +68,30 @@
                         />
                       </div>
                       <div class="form-group">
+                        <label>Time</label>
                         <input
                           class="form-control"
                           type="time"
                           [(ngModel)]="formInput.time"
                           [ngModelOptions]="{ standalone: true }"
                         />
+                      </div>
+                      <div class="form-group">
+                        <label>Geography</label>
+                        <select
+                          class="form-control"
+                          [(ngModel)]="formInput.geography"
+                          [ngModelOptions]="{ standalone: true }"
+                        >
+                          <option value="" selected
+                            >Please select geography</option
+                          >
+                          <option [value]="geography" *ngFor="let geography of geographys">{{ geography }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Ranking</label><br/>
+                        <ngb-rating [(rate)]="formInput.ranking" max="5"></ngb-rating>
                       </div>
                       <div class="text-center">
                         <button class="btn btn-default">
@@ -236,6 +257,16 @@
             <ngx-datatable-column name="username"></ngx-datatable-column>
             <ngx-datatable-column name="date"></ngx-datatable-column>
             <ngx-datatable-column name="time"></ngx-datatable-column>
+            <ngx-datatable-column name="geography"></ngx-datatable-column>
+            <ngx-datatable-column name="ranking">
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+              <ngb-rating [(rate)]="value" max="5"></ngb-rating>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Actions" sortable="false" prop="id">
               <ng-template
                 let-row="row"

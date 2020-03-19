@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import * as DeliveryRollouts from "src/app/variables/delivery-rollouts";
+import * as PurchaseChanges from "src/app/variables/purchasechanges";
 import swal from "sweetalert2";
 
 import * as am4core from "@amcharts/amcharts4/core";
@@ -17,55 +17,35 @@ export enum SelectionType {
 }
 
 @Component({
-  selector: "app-delivery-rollout-management",
-  templateUrl: "./delivery-rollout-management.component.html",
-  styleUrls: ["./delivery-rollout-management.component.scss"]
+  selector: "app-change-request",
+  templateUrl: "./change-request.component.html",
+  styleUrls: ["./change-request.component.scss"]
 })
-export class DeliveryRolloutManagementComponent implements OnInit {
+export class ChangeRequestComponent implements OnInit {
   entries: number = 5;
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows = DeliveryRollouts.DeliveryRollouts;
+  rows = PurchaseChanges.PuchaseChanges;
   SelectionType = SelectionType;
 
+  addmaterials = [0];
+
   // dropdowns
-  roles = ["admin", "user", "headquarters", "branch", "department"];
-  modules = [
-    "user access",
-    "network geography",
-    "planning",
-    "delivery and rollout",
-    "acceptance and approval",
-    "asset management"
-  ];
-  actions = ["create", "read", "update", "delete"];
-  locations = [
-    "Johor",
-    "Kedah",
-    "Kelantan",
-    "Perak",
-    "Negeri Sembilan"
-  ];
-  crews = [
-    "Abu",
-    "Umar",
-    "Uthman",
-    "Ali"
-  ];
+  progresss = ["not started", "pending", "complete"];
 
   // searchInput
   searchInput = {
-    activityid: "",
-    activitydescription: ""
+    changerequestid: "",
+    changeorder: ""
   };
 
   // formInput
   formInput = {
-    activityid: "",
-    activitydescription: "",
-    startdate: "",
-    enddate: ""
+    changerequestid: "",
+    changeorder: "",
+    date: "",
+    progress: ""
   };
 
   // Modal
@@ -79,6 +59,19 @@ export class DeliveryRolloutManagementComponent implements OnInit {
         id: key
       };
     });
+  }
+
+  addMaterial(index) {
+    let value = index + 1;
+    this.addmaterials.push(value);
+    console.log(this.addmaterials);
+  }
+
+  removeMaterial(index) {
+    if (index != 0) {
+      this.addmaterials.splice(index, 1);
+    }
+    console.log(this.addmaterials);
   }
 
   entriesChange($event) {
@@ -136,8 +129,8 @@ export class DeliveryRolloutManagementComponent implements OnInit {
   resetTable() {
     this.temp = this.rows;
 
-    this.searchInput.activityid = "";
-    this.searchInput.activitydescription = "";
+    this.searchInput.changerequestid = "";
+    this.searchInput.changeorder = "";
   }
 
   onSelect({ selected }) {
@@ -212,106 +205,90 @@ export class DeliveryRolloutManagementComponent implements OnInit {
 
   initChart() {
     let chart = am4core.create("chartdiv", am4charts.XYChart);
-    chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
-    chart.paddingRight = 30;
-    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd HH:mm";
+    // Create daily series and related axes
+    let dateAxis1 = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis1.renderer.grid.template.location = 0;
+    dateAxis1.renderer.minGridDistance = 40;
 
-    let colorSet = new am4core.ColorSet();
-    colorSet.saturation = 0.4;
-
-    chart.data = [
-      {
-        name: "John",
-        fromDate: "2018-01-01 08:00",
-        toDate: "2018-01-01 10:00",
-        color: colorSet.getIndex(0).brighten(0)
-      },
-      {
-        name: "John",
-        fromDate: "2018-01-01 12:00",
-        toDate: "2018-01-01 15:00",
-        color: colorSet.getIndex(0).brighten(0.4)
-      },
-      {
-        name: "John",
-        fromDate: "2018-01-01 15:30",
-        toDate: "2018-01-01 21:30",
-        color: colorSet.getIndex(0).brighten(0.8)
-      },
-
-      {
-        name: "Jane",
-        fromDate: "2018-01-01 09:00",
-        toDate: "2018-01-01 12:00",
-        color: colorSet.getIndex(2).brighten(0)
-      },
-      {
-        name: "Jane",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-01 17:00",
-        color: colorSet.getIndex(2).brighten(0.4)
-      },
-
-      {
-        name: "Peter",
-        fromDate: "2018-01-01 11:00",
-        toDate: "2018-01-01 16:00",
-        color: colorSet.getIndex(4).brighten(0)
-      },
-      {
-        name: "Peter",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 19:00",
-        color: colorSet.getIndex(4).brighten(0.4)
-      },
-
-      {
-        name: "Melania",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 20:00",
-        color: colorSet.getIndex(6).brighten(0)
-      },
-      {
-        name: "Melania",
-        fromDate: "2018-01-01 20:30",
-        toDate: "2018-01-01 24:00",
-        color: colorSet.getIndex(6).brighten(0.4)
-      },
-
-      {
-        name: "Donald",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-01 24:00",
-        color: colorSet.getIndex(8).brighten(0)
-      }
-    ];
-
-    let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "name";
-    categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.renderer.inversed = true;
-
-    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
-    dateAxis.renderer.minGridDistance = 70;
-    dateAxis.baseInterval = { count: 30, timeUnit: "minute" };
-    dateAxis.max = new Date(2018, 0, 1, 24, 0, 0, 0).getTime();
-    dateAxis.strictMinMax = true;
-    dateAxis.renderer.tooltipLocation = 0;
+    let valueAxis1 = chart.yAxes.push(new am4charts.ValueAxis());
 
     let series1 = chart.series.push(new am4charts.ColumnSeries());
-    series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText = "{name}: {openDateX} - {dateX}";
+    series1.dataFields.valueY = "value";
+    series1.dataFields.dateX = "date";
+    series1.data = generateDailyData();
+    series1.xAxis = dateAxis1;
+    series1.yAxis = valueAxis1;
+    series1.tooltipText = "{dateX}: [bold]{valueY}[/]";
 
-    series1.dataFields.openDateX = "fromDate";
-    series1.dataFields.dateX = "toDate";
-    series1.dataFields.categoryY = "name";
-    series1.columns.template.propertyFields.fill = "color"; // get color from data
-    series1.columns.template.propertyFields.stroke = "color";
-    series1.columns.template.strokeOpacity = 1;
+    // Create hourly series and related axes
+    let dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis2.renderer.grid.template.location = 0;
+    dateAxis2.renderer.minGridDistance = 40;
+    dateAxis2.renderer.labels.template.disabled = true;
+    dateAxis2.renderer.grid.template.disabled = true;
+    dateAxis2.renderer.tooltip.disabled = true;
 
-    chart.scrollbarX = new am4core.Scrollbar();
+    let valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis2.renderer.opposite = true;
+    valueAxis2.renderer.grid.template.disabled = true;
+    valueAxis2.renderer.labels.template.disabled = true;
+    valueAxis2.renderer.tooltip.disabled = true;
+
+    let series2 = chart.series.push(new am4charts.LineSeries());
+    series2.dataFields.valueY = "value";
+    series2.dataFields.dateX = "date";
+    series2.data = generateHourlyData();
+    series2.xAxis = dateAxis2;
+    series2.yAxis = valueAxis2;
+    series2.strokeWidth = 3;
+    series2.tooltipText =
+      "{dateX.formatDate('yyyy-MM-dd hh:00')}: [bold]{valueY}[/]";
+
+    // Add cursor
+    chart.cursor = new am4charts.XYCursor();
+
+    function generateDailyData() {
+      let firstDate = new Date();
+      firstDate.setDate(firstDate.getDate() - 10);
+      firstDate.setHours(0, 0, 0, 0);
+      let data = [];
+      for (var i = 0; i < 10; i++) {
+        let newDate = new Date(firstDate);
+        newDate.setDate(newDate.getDate() + i);
+        data.push({
+          date: newDate,
+          value: Math.round(Math.random() * 12) + 1
+        });
+      }
+      return data;
+    }
+
+    function generateHourlyData() {
+      let firstDate = new Date();
+      firstDate.setDate(firstDate.getDate() - 10);
+      let data = [];
+      for (var i = 0; i < 10 * 24; i++) {
+        let newDate = new Date(firstDate);
+        newDate.setHours(newDate.getHours() + i);
+        let value = 0;
+        if (i == 0) {
+          value = Math.round(Math.random() * 10) + 1;
+        } else {
+          value =
+            Math.round(
+              (data[data.length - 1].value / 100) *
+                (90 + Math.round(Math.random() * 20)) *
+                100
+            ) / 100;
+        }
+        data.push({
+          date: newDate,
+          value: value
+        });
+      }
+      return data;
+    }
   }
 
   ngOnInit() {}

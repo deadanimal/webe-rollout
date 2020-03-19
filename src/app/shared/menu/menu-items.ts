@@ -59,6 +59,9 @@ export const ROUTES: RouteInfo[] = [
     children: [
       { path: "matching-tower-provider", title: "Matching Tower Provider", type: "link" },
       { path: "site-selection-final-candidate", title: "Site Selection Final Candidate", type: "link" },
+      { path: "purchase-request", title: "Purchase Request (PR)", type: "link" },
+      { path: "change-request", title: "Change Request (CR)", type: "link" },
+      { path: "boq-bom", title: "Bill of Quantity (BOQ) & Bill of Material (BOM)", type: "link" },
     ]
   },
   {

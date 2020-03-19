@@ -4,7 +4,7 @@
       <div class=" row align-items-center py-4">
         <div class=" col-lg-6 col-7">
           <h6 class=" h2 text-dark d-inline-block mb-0">
-            User Matrix
+            Purchase Request & Purchase Order Management
           </h6>
 
           <nav
@@ -20,12 +20,12 @@
         </div>
 
         <div class=" col-lg-6 col-5 text-right">
-          <!-- <button
+          <button
             class="btn btn-default"
             (click)="open(classic1, 'modal_mini', 'sm', 'Add New')"
           >
             Add New
-          </button> -->
+          </button>
 
           <ng-template #classic1 let-c="close" let-d="dismiss">
             <div class="modal-content">
@@ -39,61 +39,87 @@
                   <div class="card-body px-lg-5 py-lg-5">
                     <form>
                       <div class="form-group">
-                        <label>Username</label>
+                        <label>Purchase Request ID</label>
                         <input
                           type="text"
                           class="form-control"
-                          placeholder="Enter username"
-                          [(ngModel)]="formInput.username"
+                          placeholder="Enter purchase request id"
+                          [(ngModel)]="formInput.purchaserequestid"
                           [ngModelOptions]="{ standalone: true }"
                         />
                       </div>
                       <div class="form-group">
-                        <label>Role</label>
-                        <select
+                        <label>Purchase Order</label>
+                        <input
                           class="form-control"
-                          [(ngModel)]="formInput.role"
+                          placeholder="Enter purchase order"
+                          type="text"
+                          [(ngModel)]="formInput.purchaseorder"
                           [ngModelOptions]="{ standalone: true }"
-                        >
-                          <option value="" selected>Please select role</option>
-                          <option [value]="role" *ngFor="let role of roles">{{
-                            role
-                          }}</option>
-                        </select>
+                        />
                       </div>
                       <div class="form-group">
-                        <label>Data</label>
+                        <label>Date</label>
+                        <input
+                          class="form-control"
+                          type="date"
+                          [(ngModel)]="formInput.date"
+                          [ngModelOptions]="{ standalone: true }"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Progress</label>
                         <select
                           class="form-control"
-                          [(ngModel)]="formInput.data"
+                          [(ngModel)]="formInput.progress"
                           [ngModelOptions]="{ standalone: true }"
                         >
                           <option value="" selected
-                            >Please select data</option
+                            >Please select progress</option
                           >
                           <option
-                            [value]="data"
-                            *ngFor="let data of datas"
-                            >{{ data }}</option
+                            [value]="progress"
+                            *ngFor="let progress of progresss"
+                            >{{ progress }}</option
                           >
                         </select>
                       </div>
                       <div class="form-group">
-                        <label>Rule</label>
-                        <select
+                        <label>Activity ID</label>
+                        <input
                           class="form-control"
-                          [(ngModel)]="formInput.rule"
+                          placeholder="Enter activity id"
+                          type="text"
+                          [(ngModel)]="formInput.activityid"
                           [ngModelOptions]="{ standalone: true }"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <div
+                          class="row pb-3"
+                          *ngFor="let addmaterial of addmaterials"
                         >
-                          <option value="" selected
-                            >Please select rule</option
-                          >
-                          <option
-                            [value]="rule"
-                            *ngFor="let rule of rules"
-                            >{{ rule }}</option
-                          >
-                        </select>
+                          <div class="col">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Enter material"
+                            />
+                          </div>
+                          <div class="col">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Enter quantity"
+                            />
+                          </div>
+                          <button class="btn btn-warning" (click)="addMaterial(addmaterial)">
+                            +
+                          </button>
+                          <button class="btn btn-danger" (click)="removeMaterial(addmaterial)">
+                            -
+                          </button>
+                        </div>
                       </div>
                       <div class="text-center">
                         <button class="btn btn-default">
@@ -120,18 +146,15 @@
 </div>
 
 <div class=" container-fluid mt--6">
-  <!-- <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-header text-muted text-uppercase">
-              Number of patients according to triage ({{ todaydate }})
-            </div>
-            <div class="card-body">
-              <div id="chartdiv" style="width: 100%; height: 400px"></div>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div id="chartdiv" style="width: 100%; height: 400px"></div>
         </div>
-      </div> -->
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col">
       <div class="card">
@@ -145,35 +168,19 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Enter username"
-                  [(ngModel)]="searchInput.username"
+                  placeholder="Enter purchase request id"
+                  [(ngModel)]="searchInput.purchaserequestid"
                 />
-              </div>
-              <div class="form-group">
-                <select class="form-control" [(ngModel)]="searchInput.role">
-                  <option value="" selected>Please select role</option>
-                  <option [value]="role" *ngFor="let role of roles">{{
-                    role
-                  }}</option>
-                </select>
               </div>
             </div>
             <div class="col-6">
               <div class="form-group">
-                <select class="form-control" [(ngModel)]="searchInput.data">
-                  <option value="" selected>Please select data</option>
-                  <option [value]="data" *ngFor="let data of datas">{{
-                    data
-                  }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <select class="form-control" [(ngModel)]="searchInput.rule">
-                  <option value="" selected>Please select rule</option>
-                  <option [value]="rule" *ngFor="let rule of rules">{{
-                    rule
-                  }}</option>
-                </select>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter purchase order"
+                  [(ngModel)]="searchInput.purchaseorder"
+                />
               </div>
             </div>
           </div>
@@ -209,18 +216,18 @@
               </div>
             </div>
             <!-- <div class="col-sm-12 col-md-6">
-                    <div id="datatable_filter" class="dataTables_filter">
-                      <label>
-                        <input
-                          type="search"
-                          class="form-control form-control-sm"
-                          placeholder="Search records"
-                          aria-controls="datatable"
-                          (keyup)="filterTable($event)"
-                        />
-                      </label>
-                    </div>
-                  </div> -->
+                      <div id="datatable_filter" class="dataTables_filter">
+                        <label>
+                          <input
+                            type="search"
+                            class="form-control form-control-sm"
+                            placeholder="Search records"
+                            aria-controls="datatable"
+                            (keyup)="filterTable($event)"
+                          />
+                        </label>
+                      </div>
+                    </div> -->
           </div>
 
           <ngx-datatable
@@ -233,10 +240,30 @@
             [rows]="temp"
             (activate)="onActivate($event)"
           >
-            <ngx-datatable-column name="Username"></ngx-datatable-column>
-            <ngx-datatable-column name="Role"></ngx-datatable-column>
-            <ngx-datatable-column name="Data"></ngx-datatable-column>
-            <ngx-datatable-column name="Rule"></ngx-datatable-column>
+            <ngx-datatable-column
+              name="purchaserequestid"
+            ></ngx-datatable-column>
+            <ngx-datatable-column name="purchaseorder"></ngx-datatable-column>
+            <ngx-datatable-column name="date"></ngx-datatable-column>
+            <ngx-datatable-column name="progress">
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+                <span *ngIf="value == 'complete'" class="badge badge-success">
+                  complete
+                </span>
+
+                <span *ngIf="value == 'pending'" class="badge badge-warning">
+                  pending
+                </span>
+
+                <span *ngIf="value == 'not started'" class="badge badge-danger">
+                  not started
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Actions" sortable="false" prop="id">
               <ng-template
                 let-row="row"

@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from "@angular/core";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
-import * as DeliveryRollouts from "src/app/variables/delivery-rollouts";
+import * as BoqBoms from "src/app/variables/boqboms";
 import swal from "sweetalert2";
 
 import * as am4core from "@amcharts/amcharts4/core";
@@ -17,16 +17,16 @@ export enum SelectionType {
 }
 
 @Component({
-  selector: "app-delivery-rollout-management",
-  templateUrl: "./delivery-rollout-management.component.html",
-  styleUrls: ["./delivery-rollout-management.component.scss"]
+  selector: "app-boq-bom",
+  templateUrl: "./boq-bom.component.html",
+  styleUrls: ["./boq-bom.component.scss"]
 })
-export class DeliveryRolloutManagementComponent implements OnInit {
+export class BoqBomComponent implements OnInit {
   entries: number = 5;
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows = DeliveryRollouts.DeliveryRollouts;
+  rows = BoqBoms.BoqBoms;
   SelectionType = SelectionType;
 
   // dropdowns
@@ -40,24 +40,14 @@ export class DeliveryRolloutManagementComponent implements OnInit {
     "asset management"
   ];
   actions = ["create", "read", "update", "delete"];
-  locations = [
-    "Johor",
-    "Kedah",
-    "Kelantan",
-    "Perak",
-    "Negeri Sembilan"
-  ];
-  crews = [
-    "Abu",
-    "Umar",
-    "Uthman",
-    "Ali"
-  ];
+  locations = ["Johor", "Kedah", "Kelantan", "Perak", "Negeri Sembilan"];
+  crews = ["Abu", "Umar", "Uthman", "Ali"];
 
   // searchInput
   searchInput = {
     activityid: "",
-    activitydescription: ""
+    boqid: "",
+    bomid: ""
   };
 
   // formInput
@@ -137,7 +127,8 @@ export class DeliveryRolloutManagementComponent implements OnInit {
     this.temp = this.rows;
 
     this.searchInput.activityid = "";
-    this.searchInput.activitydescription = "";
+    this.searchInput.boqid = "";
+    this.searchInput.bomid = "";
   }
 
   onSelect({ selected }) {
@@ -222,91 +213,170 @@ export class DeliveryRolloutManagementComponent implements OnInit {
 
     chart.data = [
       {
-        name: "John",
-        fromDate: "2018-01-01 08:00",
-        toDate: "2018-01-01 10:00",
-        color: colorSet.getIndex(0).brighten(0)
+        category: "Site #1",
+        start: "2016-01-01",
+        end: "2016-01-14",
+        color: colorSet.getIndex(0).brighten(0),
+        task: "Gathering requirements"
       },
       {
-        name: "John",
-        fromDate: "2018-01-01 12:00",
-        toDate: "2018-01-01 15:00",
-        color: colorSet.getIndex(0).brighten(0.4)
+        category: "Site #1",
+        start: "2016-01-16",
+        end: "2016-01-27",
+        color: colorSet.getIndex(0).brighten(0.4),
+        task: "Producing specifications"
       },
       {
-        name: "John",
-        fromDate: "2018-01-01 15:30",
-        toDate: "2018-01-01 21:30",
-        color: colorSet.getIndex(0).brighten(0.8)
-      },
-
-      {
-        name: "Jane",
-        fromDate: "2018-01-01 09:00",
-        toDate: "2018-01-01 12:00",
-        color: colorSet.getIndex(2).brighten(0)
+        category: "Site #1",
+        start: "2016-02-05",
+        end: "2016-04-18",
+        color: colorSet.getIndex(0).brighten(0.8),
+        task: "Development"
       },
       {
-        name: "Jane",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-01 17:00",
-        color: colorSet.getIndex(2).brighten(0.4)
-      },
-
-      {
-        name: "Peter",
-        fromDate: "2018-01-01 11:00",
-        toDate: "2018-01-01 16:00",
-        color: colorSet.getIndex(4).brighten(0)
+        category: "Site #1",
+        start: "2016-04-18",
+        end: "2016-04-30",
+        color: colorSet.getIndex(0).brighten(1.2),
+        task: "Testing and QA"
       },
       {
-        name: "Peter",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 19:00",
-        color: colorSet.getIndex(4).brighten(0.4)
-      },
-
-      {
-        name: "Melania",
-        fromDate: "2018-01-01 16:00",
-        toDate: "2018-01-01 20:00",
-        color: colorSet.getIndex(6).brighten(0)
+        category: "Site #2",
+        start: "2016-01-08",
+        end: "2016-01-10",
+        color: colorSet.getIndex(2).brighten(0),
+        task: "Gathering requirements"
       },
       {
-        name: "Melania",
-        fromDate: "2018-01-01 20:30",
-        toDate: "2018-01-01 24:00",
-        color: colorSet.getIndex(6).brighten(0.4)
+        category: "Site #2",
+        start: "2016-01-12",
+        end: "2016-01-15",
+        color: colorSet.getIndex(2).brighten(0.4),
+        task: "Producing specifications"
       },
-
       {
-        name: "Donald",
-        fromDate: "2018-01-01 13:00",
-        toDate: "2018-01-01 24:00",
-        color: colorSet.getIndex(8).brighten(0)
+        category: "Site #2",
+        start: "2016-01-16",
+        end: "2016-02-05",
+        color: colorSet.getIndex(2).brighten(0.8),
+        task: "Development"
+      },
+      {
+        category: "Site #2",
+        start: "2016-02-10",
+        end: "2016-02-18",
+        color: colorSet.getIndex(2).brighten(1.2),
+        task: "Testing and QA"
+      },
+      {
+        category: "Site #3",
+        start: "2016-01-02",
+        end: "2016-01-08",
+        color: colorSet.getIndex(4).brighten(0),
+        task: "Gathering requirements"
+      },
+      {
+        category: "Site #3",
+        start: "2016-01-08",
+        end: "2016-01-16",
+        color: colorSet.getIndex(4).brighten(0.4),
+        task: "Producing specifications"
+      },
+      {
+        category: "Site #3",
+        start: "2016-01-19",
+        end: "2016-03-01",
+        color: colorSet.getIndex(4).brighten(0.8),
+        task: "Development"
+      },
+      {
+        category: "Site #3",
+        start: "2016-03-12",
+        end: "2016-04-05",
+        color: colorSet.getIndex(4).brighten(1.2),
+        task: "Testing and QA"
+      },
+      {
+        category: "Site #4",
+        start: "2016-01-01",
+        end: "2016-01-19",
+        color: colorSet.getIndex(6).brighten(0),
+        task: "Gathering requirements"
+      },
+      {
+        category: "Site #4",
+        start: "2016-01-19",
+        end: "2016-02-03",
+        color: colorSet.getIndex(6).brighten(0.4),
+        task: "Producing specifications"
+      },
+      {
+        category: "Site #4",
+        start: "2016-03-20",
+        end: "2016-04-25",
+        color: colorSet.getIndex(6).brighten(0.8),
+        task: "Development"
+      },
+      {
+        category: "Site #4",
+        start: "2016-04-27",
+        end: "2016-05-15",
+        color: colorSet.getIndex(6).brighten(1.2),
+        task: "Testing and QA"
+      },
+      {
+        category: "Site #5",
+        start: "2016-01-01",
+        end: "2016-01-12",
+        color: colorSet.getIndex(8).brighten(0),
+        task: "Gathering requirements"
+      },
+      {
+        category: "Site #5",
+        start: "2016-01-12",
+        end: "2016-01-19",
+        color: colorSet.getIndex(8).brighten(0.4),
+        task: "Producing specifications"
+      },
+      {
+        category: "Site #5",
+        start: "2016-01-19",
+        end: "2016-03-01",
+        color: colorSet.getIndex(8).brighten(0.8),
+        task: "Development"
+      },
+      {
+        category: "Site #5",
+        start: "2016-03-08",
+        end: "2016-03-30",
+        color: colorSet.getIndex(8).brighten(1.2),
+        task: "Testing and QA"
       }
     ];
 
+    chart.dateFormatter.dateFormat = "yyyy-MM-dd";
+    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+
     let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "name";
+    categoryAxis.dataFields.category = "category";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.inversed = true;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
     dateAxis.renderer.minGridDistance = 70;
-    dateAxis.baseInterval = { count: 30, timeUnit: "minute" };
-    dateAxis.max = new Date(2018, 0, 1, 24, 0, 0, 0).getTime();
-    dateAxis.strictMinMax = true;
+    dateAxis.baseInterval = { count: 1, timeUnit: "day" };
+    // dateAxis.max = new Date(2018, 0, 1, 24, 0, 0, 0).getTime();
+    //dateAxis.strictMinMax = true;
     dateAxis.renderer.tooltipLocation = 0;
 
     let series1 = chart.series.push(new am4charts.ColumnSeries());
-    series1.columns.template.width = am4core.percent(80);
-    series1.columns.template.tooltipText = "{name}: {openDateX} - {dateX}";
+    series1.columns.template.height = am4core.percent(70);
+    series1.columns.template.tooltipText =
+      "{task}: [bold]{openDateX}[/] - [bold]{dateX}[/]";
 
-    series1.dataFields.openDateX = "fromDate";
-    series1.dataFields.dateX = "toDate";
-    series1.dataFields.categoryY = "name";
+    series1.dataFields.openDateX = "start";
+    series1.dataFields.dateX = "end";
+    series1.dataFields.categoryY = "category";
     series1.columns.template.propertyFields.fill = "color"; // get color from data
     series1.columns.template.propertyFields.stroke = "color";
     series1.columns.template.strokeOpacity = 1;
@@ -320,5 +390,23 @@ export class DeliveryRolloutManagementComponent implements OnInit {
     this.zone.runOutsideAngular(() => {
       this.initChart();
     });
+  }
+
+  view(type) {
+    // this.processTitle = type;
+    // if (modalDimension === "sm" && type === "modal_mini") {
+    this.modalService
+      .open(type, {
+        centered: true,
+        size: "lg"
+      })
+      .result.then(
+        result => {
+          this.closeResult = "Closed with: $result";
+        },
+        reason => {
+          this.closeResult = "Dismissed $this.getDismissReason(reason)";
+        }
+      );
   }
 }

@@ -55,8 +55,18 @@ export class SiteSelectionFinalCandidateComponent implements OnInit {
     siteid: "",
     username: "",
     date: "",
-    time: ""
+    time: "",
+    geography: "",
+    ranking: ""
   };
+
+  // dropdown
+  geographys = [
+    "urban",
+    "suburban",
+    "rural",
+    "exurban"
+  ];
 
   // Modal
   closeResult: string;

@@ -17,9 +17,12 @@ import { RouterModule } from "@angular/router";
 import { PlanningManagementRoutes } from "./planning-management.routing";
 import { MatchingTowerProviderComponent } from "./matching-tower-provider/matching-tower-provider.component";
 import { SiteSelectionFinalCandidateComponent } from './site-selection-final-candidate/site-selection-final-candidate.component';
+import { PurchaseRequestComponent } from './purchase-request/purchase-request.component';
+import { ChangeRequestComponent } from './change-request/change-request.component';
+import { BoqBomComponent } from './boq-bom/boq-bom.component';
 
 @NgModule({
-  declarations: [MatchingTowerProviderComponent, SiteSelectionFinalCandidateComponent],
+  declarations: [MatchingTowerProviderComponent, SiteSelectionFinalCandidateComponent, PurchaseRequestComponent, ChangeRequestComponent, BoqBomComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,

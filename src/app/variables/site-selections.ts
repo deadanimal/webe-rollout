@@ -4,142 +4,182 @@ export const SiteSelections: any = [
     siteid: "SITELVT8029",
     username: "Cinderella Macklin",
     date: "2020-01-14",
-    time: "5:18 PM"
+    time: "5:18 PM",
+    ranking: "3",
+    geography: "urban"
   },
   {
     id: 2,
     siteid: "SITEGMH6644",
     username: "Archibald Skelhorn",
     date: "2019-06-19",
-    time: "2:29 AM"
+    time: "2:29 AM",
+    ranking: "2",
+    geography: "suburban"
   },
   {
     id: 3,
     siteid: "SITEDHT6484",
     username: "Euell Livoir",
     date: "2019-05-06",
-    time: "2:54 AM"
+    time: "2:54 AM",
+    ranking: "1",
+    geography: "rural"
   },
   {
     id: 4,
     siteid: "SITEZYO5062",
     username: "Sunny Mallatratt",
     date: "2019-09-07",
-    time: "6:10 AM"
+    time: "6:10 AM",
+    ranking: "4",
+    geography: "exurban"
   },
   {
     id: 5,
     siteid: "SITEGFO4590",
     username: "Alonzo Leyes",
     date: "2019-04-09",
-    time: "9:35 PM"
+    time: "9:35 PM",
+    ranking: "3",
+    geography: "urban"
   },
   {
     id: 6,
     siteid: "SITEGWA4977",
     username: "Stafford Heartfield",
     date: "2019-04-20",
-    time: "11:49 AM"
+    time: "11:49 AM",
+    ranking: "3",
+    geography: "urban"
   },
   {
     id: 7,
     siteid: "SITEDED6323",
     username: "Thaine Gavey",
     date: "2019-03-20",
-    time: "12:08 AM"
+    time: "12:08 AM",
+    ranking: "5",
+    geography: "suburban"
   },
   {
     id: 8,
     siteid: "SITECMR1068",
     username: "Lizzie Shine",
     date: "2019-09-21",
-    time: "10:48 AM"
+    time: "10:48 AM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 9,
     siteid: "SITEGRI7149",
     username: "Cherish Browett",
     date: "2019-04-03",
-    time: "1:08 AM"
+    time: "1:08 AM",
+    ranking: "3",
+    geography: "exurban"
   },
   {
     id: 10,
     siteid: "SITEHEV4021",
     username: "Regine Dugood",
     date: "2019-07-09",
-    time: "7:53 PM"
+    time: "7:53 PM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 11,
     siteid: "SITECBM9121",
     username: "Rina Bellard",
     date: "2020-01-31",
-    time: "4:50 PM"
+    time: "4:50 PM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 12,
     siteid: "SITEBLQ3332",
     username: "Annelise Webley",
     date: "2019-04-23",
-    time: "4:23 PM"
+    time: "4:23 PM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 13,
     siteid: "SITENTM5626",
     username: "Carola Sobieski",
     date: "2019-07-08",
-    time: "8:36 PM"
+    time: "8:36 PM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 14,
     siteid: "SITEICO1141",
     username: "Caroljean Ransome",
     date: "2020-01-20",
-    time: "1:43 AM"
+    time: "1:43 AM",
+    ranking: "4",
+    geography: "urban"
   },
   {
     id: 15,
     siteid: "SITEIGH6876",
     username: "Tamra Hebblewhite",
     date: "2019-10-02",
-    time: "1:20 AM"
+    time: "1:20 AM",
+    ranking: "5",
+    geography: "urban"
   },
   {
     id: 16,
     siteid: "SITEKER3291",
     username: "Alberik Guerriero",
     date: "2019-08-09",
-    time: "4:51 PM"
+    time: "4:51 PM",
+    ranking: "1",
+    geography: "exurban"
   },
   {
     id: 17,
     siteid: "SITEQZO4222",
     username: "Kit Boissieux",
     date: "2019-12-30",
-    time: "8:01 AM"
+    time: "8:01 AM",
+    ranking: "3",
+    geography: "exurban"
   },
   {
     id: 18,
     siteid: "SITEXBM8622",
     username: "Devland Yablsley",
     date: "2019-12-03",
-    time: "9:37 PM"
+    time: "9:37 PM",
+    ranking: "3",
+    geography: "rural"
   },
   {
     id: 19,
     siteid: "SITEDDM0762",
     username: "Sharai Wilde",
     date: "2019-04-11",
-    time: "2:27 PM"
+    time: "2:27 PM",
+    ranking: "4",
+    geography: "suburban"
   },
   {
     id: 20,
     siteid: "SITEJED7269",
     username: "Gusta Alfwy",
     date: "2019-08-24",
-    time: "2:09 AM"
-  },
-  {
+    time: "2:09 AM",
+    ranking: "5",
+    geography: "rural"
+  }
+  /* {
     id: 21,
     siteid: "SITEHYR9035",
     username: "Burke Van Baaren",
@@ -348,5 +388,5 @@ export const SiteSelections: any = [
     username: "Adan Jachtym",
     date: "2019-12-06",
     time: "2:52 PM"
-  }
+  } */
 ];
