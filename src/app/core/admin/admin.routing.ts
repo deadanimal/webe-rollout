@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HelpdeskComponent } from './helpdesk/helpdesk.component';
-import { DeliveryRolloutManagementComponent } from './delivery-rollout-management/delivery-rollout-management.component';
 import { AssetManagementComponent } from './asset-management/asset-management.component';
 import { AcceptanceApprovalManagementComponent } from './acceptance-approval-management/acceptance-approval-management.component';
 
@@ -27,7 +26,7 @@ export const AdminRoutes: Routes = [
             },
             {
                 path: 'delivery-rollout-management',
-                component: DeliveryRolloutManagementComponent
+                loadChildren: './delivery-rollout-management/delivery-rollout-management.module#DeliveryRolloutManagementModule'
             },
             {
                 path: 'asset-management',

@@ -73,8 +73,13 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/admin/delivery-rollout-management",
     title: "Delivery & Rollout Management",
-    type: "link",
-    icontype: "fas fa-truck text-warning"
+    type: "sub",
+    icontype: "fas fa-truck text-warning",
+    collapse: "rollout",
+    isCollapsed: true,
+    children: [
+      { path: "project-management", title: "Project Management", type: "link" }
+    ]
   },
   {
     path: "/admin/asset-management",

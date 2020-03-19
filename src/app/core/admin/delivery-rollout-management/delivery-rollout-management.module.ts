@@ -13,19 +13,11 @@ import { ModalModule } from "ngx-bootstrap/modal";
 
 import { RouterModule } from '@angular/router';
 
-import { AdminRoutes } from './admin.routing';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HelpdeskComponent } from './helpdesk/helpdesk.component';
-import { AssetManagementComponent } from './asset-management/asset-management.component';
-import { AcceptanceApprovalManagementComponent } from './acceptance-approval-management/acceptance-approval-management.component';
+import { DeliveryRolloutManagementRoutes } from './delivery-rollout-management.routing';
+import { ProjectManagementComponent } from './project-management/project-management.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    HelpdeskComponent,
-    AssetManagementComponent,
-    AcceptanceApprovalManagementComponent
-  ],
+  declarations: [ProjectManagementComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -38,7 +30,7 @@ import { AcceptanceApprovalManagementComponent } from './acceptance-approval-man
     TooltipModule.forRoot(),
     FormsModule,
     BsDatepickerModule.forRoot(),
-    RouterModule.forChild(AdminRoutes)
+    RouterModule.forChild(DeliveryRolloutManagementRoutes)
   ]
 })
-export class AdminModule { }
+export class DeliveryRolloutManagementModule { }
